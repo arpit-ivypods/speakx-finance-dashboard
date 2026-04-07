@@ -68,8 +68,8 @@ function Background() {
 
   useEffect(() => {
     if (!materialRef.current) return;
-    const topColor = isDark ? '#0A101E' : '#E8EDF5';
-    const bottomColor = isDark ? '#050B14' : '#F0F2F8';
+    const topColor = isDark ? '#0A101E' : '#FFFFFF';
+    const bottomColor = isDark ? '#050B14' : '#F8F9FC';
     materialRef.current.uniforms.uColorTop.value.set(topColor);
     materialRef.current.uniforms.uColorBottom.value.set(bottomColor);
   }, [isDark]);

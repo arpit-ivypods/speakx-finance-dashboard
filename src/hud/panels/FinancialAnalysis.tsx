@@ -223,7 +223,8 @@ export default function FinancialAnalysis() {
       className="fade-in-up"
       style={{
         ...glassCard,
-        ...(isHovered ? glassCardHover : {}),
+        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

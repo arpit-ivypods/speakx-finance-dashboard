@@ -117,7 +117,8 @@ export default function MarginTrends() {
       className="fade-in-up"
       style={{
         ...glassCard,
-        ...(isHovered ? glassCardHover : {}),
+        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         animationDelay: '0.1s',
       }}
       onMouseEnter={() => setIsHovered(true)}

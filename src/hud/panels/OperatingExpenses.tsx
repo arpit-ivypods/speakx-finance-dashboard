@@ -243,7 +243,8 @@ const OperatingExpenses: React.FC = () => {
     <div
       style={{
         ...glassStyle,
-        ...(isHovered ? glassHover : {}),
+        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

@@ -88,7 +88,8 @@ export default function ForecastPanel() {
     <div
       style={{
         ...glassCard,
-        ...(isHovered ? glassCardHover : {}),
+        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         height: '100%',
         justifyContent: 'center',
       }}
