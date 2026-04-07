@@ -64,7 +64,7 @@ const FinancialKPIs: React.FC = () => {
         border: '1px solid var(--border-card)',
         borderRadius: 8,
         backdropFilter: 'blur(10px)',
-        padding: isMobile ? '12px 14px' : '16px 20px',
+        padding: isMobile ? '16px' : '16px 20px',
         height: '100%',
         boxSizing: 'border-box',
         overflow: 'hidden',
@@ -75,7 +75,7 @@ const FinancialKPIs: React.FC = () => {
       <div
         style={{
           fontFamily: "'Orbitron', monospace",
-          fontSize: 11,
+          fontSize: isMobile ? 14 : 11,
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
@@ -97,7 +97,7 @@ const FinancialKPIs: React.FC = () => {
                 flex: 1,
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
+                gap: isMobile ? 6 : 8,
                 ...(isMobile ? { minHeight: 40 } : {}),
                 borderBottom:
                   index < kpiRows.length - 1
@@ -111,7 +111,7 @@ const FinancialKPIs: React.FC = () => {
               <span
                 style={{
                   fontFamily: "'Roboto Mono', monospace",
-                  fontSize: 9,
+                  fontSize: isMobile ? 12 : 9,
                   fontWeight: 400,
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
@@ -126,7 +126,7 @@ const FinancialKPIs: React.FC = () => {
               <span
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: kpi.isPercent ? (isMobile ? 16 : 20) : (isMobile ? 22 : 28),
+                  fontSize: kpi.isPercent ? (isMobile ? 18 : 20) : (isMobile ? 22 : 28),
                   fontWeight: 700,
                   color: mapColor(kpi.color),
                   filter: `drop-shadow(0 0 8px ${mapColor(kpi.color)}66)`,

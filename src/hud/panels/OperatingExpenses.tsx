@@ -59,7 +59,8 @@ const Bar: React.FC<{
   color: string;
   heightFraction: number;
   index: number;
-}> = ({ label, value, unit, color, heightFraction, index }) => {
+  isMobile?: boolean;
+}> = ({ label, value, unit, color, heightFraction, index, isMobile = false }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -77,7 +78,7 @@ const Bar: React.FC<{
         className="fade-in"
         style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: 10,
+          fontSize: isMobile ? 12 : 10,
           fontWeight: 700,
           color,
           marginBottom: 4,
@@ -138,7 +139,7 @@ const Bar: React.FC<{
       <span
         style={{
           fontFamily: "'Roboto Mono', monospace",
-          fontSize: 9,
+          fontSize: isMobile ? 11 : 9,
           fontWeight: 400,
           color: 'var(--text-muted)',
           marginTop: 5,
@@ -159,13 +160,14 @@ const BreakdownRow: React.FC<{
   color: string;
   maxPct: number;
   index: number;
-}> = ({ category, pct, color, maxPct, index }) => (
+  isMobile?: boolean;
+}> = ({ category, pct, color, maxPct, index, isMobile = false }) => (
   <div
     className="fade-in"
     style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: 3,
+      gap: isMobile ? 6 : 3,
       animationDelay: `${index * 0.08}s`,
     }}
   >
@@ -174,7 +176,7 @@ const BreakdownRow: React.FC<{
       <div
         style={{
           width: 3,
-          height: 12,
+          height: isMobile ? 16 : 12,
           borderRadius: 1.5,
           background: color,
           boxShadow: `0 0 4px ${color}60`,
@@ -184,7 +186,7 @@ const BreakdownRow: React.FC<{
       <span
         style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: 9,
+          fontSize: isMobile ? 12 : 9,
           fontWeight: 400,
           color: 'var(--text-secondary)',
           flex: 1,
@@ -195,7 +197,7 @@ const BreakdownRow: React.FC<{
       <span
         style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: 10,
+          fontSize: isMobile ? 13 : 10,
           fontWeight: 700,
           color,
           filter: `drop-shadow(0 0 4px ${color}30)`,
@@ -208,7 +210,7 @@ const BreakdownRow: React.FC<{
     {/* Mini progress bar */}
     <div
       style={{
-        height: 2,
+        height: isMobile ? 3 : 2,
         borderRadius: 1,
         background: 'var(--chart-gridline)',
         marginLeft: 9,
@@ -241,7 +243,7 @@ const OperatingExpenses: React.FC = () => {
     <div
       style={{
         ...glassStyle,
-        padding: isMobile ? '12px 14px' : '14px 18px',
+        padding: isMobile ? '16px' : '14px 18px',
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
@@ -252,7 +254,7 @@ const OperatingExpenses: React.FC = () => {
       <div
         style={{
           fontFamily: "'Orbitron', monospace",
-          fontSize: 11,
+          fontSize: isMobile ? 14 : 11,
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
@@ -287,6 +289,7 @@ const OperatingExpenses: React.FC = () => {
               color={mapColor(q.color)}
               heightFraction={barMeta[q.label]}
               index={i}
+              isMobile={isMobile}
             />
           ))}
         </div>
@@ -332,6 +335,7 @@ const OperatingExpenses: React.FC = () => {
               color={mapColor(item.color)}
               maxPct={maxPct}
               index={i}
+              isMobile={isMobile}
             />
           ))}
         </div>

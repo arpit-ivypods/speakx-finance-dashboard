@@ -57,7 +57,7 @@ function RangeBar({ mapColor, isMobile }: { mapColor: (c: string) => string; isM
         <span
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 8,
+            fontSize: isMobile ? 11 : 8,
             color: 'var(--text-muted)',
           }}
         >
@@ -66,7 +66,7 @@ function RangeBar({ mapColor, isMobile }: { mapColor: (c: string) => string; isM
         <span
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 8,
+            fontSize: isMobile ? 11 : 8,
             color: 'var(--text-muted)',
           }}
         >
@@ -86,7 +86,7 @@ export default function ForecastPanel() {
     <div
       style={{
         ...glassCard,
-        ...(isMobile ? { padding: '12px 14px' } : {}),
+        ...(isMobile ? { padding: '16px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         height: '100%',
@@ -98,7 +98,7 @@ export default function ForecastPanel() {
       <div
         style={{
           fontFamily: "'Orbitron', monospace",
-          fontSize: 10,
+          fontSize: isMobile ? 14 : 10,
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
@@ -115,7 +115,7 @@ export default function ForecastPanel() {
         <div
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            fontSize: 9,
+            fontSize: isMobile ? 12 : 9,
             fontWeight: 500,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
@@ -128,7 +128,7 @@ export default function ForecastPanel() {
         <div
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 18,
+            fontSize: isMobile ? 22 : 18,
             fontWeight: 700,
             color: mapColor('#00FFCC'),
             filter: `drop-shadow(0 0 8px ${mapColor('#00FFCC')}66)`,
@@ -147,7 +147,7 @@ export default function ForecastPanel() {
       <div
         style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: 8,
+          fontSize: isMobile ? 11 : 8,
           color: 'var(--text-muted)',
           marginBottom: 2,
         }}
@@ -165,7 +165,7 @@ export default function ForecastPanel() {
         <div
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            fontSize: 9,
+            fontSize: isMobile ? 12 : 9,
             fontWeight: 500,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
@@ -178,7 +178,7 @@ export default function ForecastPanel() {
         <div
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 18,
+            fontSize: isMobile ? 22 : 18,
             fontWeight: 700,
             color: mapColor('#00FFCC'),
             filter: `drop-shadow(0 0 8px ${mapColor('#00FFCC')}66)`,

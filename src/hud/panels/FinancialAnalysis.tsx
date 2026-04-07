@@ -37,7 +37,7 @@ function describeArc(cx: number, cy: number, r: number, startAngle: number, endA
 
 /* ── Donut Chart with center label ──────────────────── */
 
-function DonutChart({ mapColor }: { mapColor: (c: string) => string }) {
+function DonutChart({ mapColor, isMobile }: { mapColor: (c: string) => string; isMobile: boolean }) {
   const [hovered, setHovered] = useState<number | null>(null);
   const [animProgress, setAnimProgress] = useState(0);
 
@@ -137,7 +137,7 @@ function DonutChart({ mapColor }: { mapColor: (c: string) => string }) {
         <div
           style={{
             fontFamily: FONTS.data.family,
-            fontSize: 20,
+            fontSize: isMobile ? 22 : 20,
             fontWeight: 700,
             color: 'var(--text-primary)',
             lineHeight: 1,
@@ -149,7 +149,7 @@ function DonutChart({ mapColor }: { mapColor: (c: string) => string }) {
         <div
           style={{
             fontFamily: FONTS.label.family,
-            fontSize: 7,
+            fontSize: isMobile ? 9 : 7,
             color: 'var(--text-muted)',
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
@@ -218,7 +218,7 @@ export default function FinancialAnalysis() {
       className="fade-in-up"
       style={{
         ...glassCard,
-        ...(isMobile ? { padding: '12px 14px' } : {}),
+        ...(isMobile ? { padding: '16px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
@@ -229,7 +229,7 @@ export default function FinancialAnalysis() {
       <div
         style={{
           fontFamily: FONTS.header.family,
-          fontSize: SIZES.panelTitle,
+          fontSize: isMobile ? 14 : SIZES.panelTitle,
           fontWeight: FONTS.header.weight,
           textTransform: FONTS.header.transform,
           letterSpacing: FONTS.header.letterSpacing,
@@ -245,7 +245,7 @@ export default function FinancialAnalysis() {
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 16, flex: 1, minHeight: 0, overflow: isMobile ? 'auto' : 'hidden', alignItems: isMobile ? 'center' : undefined }}>
         {/* Col 1: Donut chart */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'center' : undefined, flexShrink: 0, ...(isMobile ? { alignSelf: 'center' } : {}) }}>
-          <DonutChart mapColor={mapColor} />
+          <DonutChart mapColor={mapColor} isMobile={isMobile} />
         </div>
 
         {/* Col 2: Legend items */}
@@ -285,7 +285,7 @@ export default function FinancialAnalysis() {
                 <div
                   style={{
                     fontFamily: FONTS.body.family,
-                    fontSize: 10,
+                    fontSize: isMobile ? 12 : 10,
                     color: 'var(--text-secondary)',
                     lineHeight: 1.2,
                     marginBottom: 2,
@@ -297,7 +297,7 @@ export default function FinancialAnalysis() {
                   <span
                     style={{
                       fontFamily: FONTS.data.family,
-                      fontSize: isMobile ? 13 : 15,
+                      fontSize: isMobile ? 15 : 15,
                       fontWeight: 700,
                       color: mapColor(seg.color),
                       filter: `drop-shadow(0 0 6px ${mapColor(seg.color)}40)`,
@@ -309,7 +309,7 @@ export default function FinancialAnalysis() {
                   <span
                     style={{
                       fontFamily: FONTS.label.family,
-                      fontSize: 8,
+                      fontSize: isMobile ? 10 : 8,
                       color: mapColor(seg.color),
                       opacity: 0.6,
                       background: `${mapColor(seg.color)}12`,
@@ -349,7 +349,7 @@ export default function FinancialAnalysis() {
           <div
             style={{
               fontFamily: FONTS.label.family,
-              fontSize: 9,
+              fontSize: isMobile ? 12 : 9,
               color: 'var(--text-muted)',
               textTransform: 'uppercase',
               letterSpacing: '0.06em',
@@ -361,7 +361,7 @@ export default function FinancialAnalysis() {
           <div
             style={{
               fontFamily: FONTS.data.family,
-              fontSize: 22,
+              fontSize: isMobile ? 20 : 22,
               fontWeight: 700,
               color: mapColor(COLORS.cyan),
               filter: `drop-shadow(0 0 10px ${mapColor(COLORS.cyan)}50)`,
@@ -374,7 +374,7 @@ export default function FinancialAnalysis() {
           <div
             style={{
               fontFamily: FONTS.body.family,
-              fontSize: 9,
+              fontSize: isMobile ? 11 : 9,
               color: 'var(--text-muted)',
               textTransform: 'uppercase',
               letterSpacing: '0.04em',
@@ -398,7 +398,7 @@ export default function FinancialAnalysis() {
                 <span
                   style={{
                     fontFamily: FONTS.data.family,
-                    fontSize: 11,
+                    fontSize: isMobile ? 12 : 11,
                     color: mapColor(s.color),
                     fontWeight: 700,
                   }}

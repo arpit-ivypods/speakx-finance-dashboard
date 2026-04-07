@@ -11,7 +11,7 @@ const RightColumn = () => {
     <div style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: isMobile ? '10px' : '12px',
+      gap: isMobile ? '12px' : '12px',
       width: isDesktop ? '60%' : '100%',
       height: isDesktop ? '100%' : undefined,
       minWidth: 0,
@@ -47,7 +47,7 @@ const RightColumn = () => {
         <div style={{
           display: 'flex',
           flexDirection: isMobile ? 'column' : 'row',
-          gap: isMobile ? '10px' : '12px',
+          gap: isMobile ? '12px' : '12px',
           height: isDesktop ? '100%' : undefined,
         }}>
           <div style={{ flex: 1, minWidth: 0, minHeight: isMobile ? 180 : undefined }}>

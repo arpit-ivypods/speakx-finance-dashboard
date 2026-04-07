@@ -19,8 +19,8 @@ const HUD = () => {
     };
   }, [isMobile]);
 
-  const padding = isMobile ? '12px' : isTablet ? '16px' : '20px';
-  const gap = isMobile ? '10px' : isTablet ? '12px' : '16px';
+  const padding = isMobile ? '16px 16px' : isTablet ? '16px' : '20px';
+  const gap = isMobile ? '12px' : isTablet ? '12px' : '16px';
 
   return (
     <div style={{
@@ -44,7 +44,7 @@ const HUD = () => {
         flexDirection: isMobile ? 'column' : 'row',
         gap,
         flex: isMobile ? undefined : 1,
-        marginTop: '12px',
+        marginTop: isMobile ? '8px' : '12px',
         minHeight: isMobile ? undefined : 0,
       }}>
         <LeftColumn />

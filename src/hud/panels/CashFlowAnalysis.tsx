@@ -25,15 +25,16 @@ interface KPIRowProps {
   unit: string;
   currency: string;
   color: string;
+  isMobile: boolean;
 }
 
-function KPIRow({ label, value, unit, currency, color }: KPIRowProps) {
+function KPIRow({ label, value, unit, currency, color, isMobile }: KPIRowProps) {
   return (
     <div style={{ marginBottom: 12 }}>
       <div
         style={{
           fontFamily: "'Roboto Mono', monospace",
-          fontSize: 9,
+          fontSize: isMobile ? 12 : 9,
           fontWeight: 500,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
@@ -53,7 +54,7 @@ function KPIRow({ label, value, unit, currency, color }: KPIRowProps) {
         <span
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 18,
+            fontSize: isMobile ? 22 : 18,
             fontWeight: 700,
             color,
             filter: `drop-shadow(0 0 8px ${color}66)`,
@@ -92,7 +93,7 @@ export default function CashFlowAnalysis() {
     <div
       style={{
         ...glassCard,
-        ...(isMobile ? { padding: '12px 14px' } : {}),
+        ...(isMobile ? { padding: '16px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         height: '100%',
@@ -104,7 +105,7 @@ export default function CashFlowAnalysis() {
       <div
         style={{
           fontFamily: "'Orbitron', monospace",
-          fontSize: 10,
+          fontSize: isMobile ? 14 : 10,
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
@@ -124,6 +125,7 @@ export default function CashFlowAnalysis() {
           unit={kpi.unit}
           currency={kpi.currency}
           color={mapColor(kpi.color)}
+          isMobile={isMobile}
         />
       ))}
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FONTS } from '../../theme/typography';
+import { FONTS, SIZES } from '../../theme/typography';
 import { marginTrends } from '../../data/mockData';
 import { useTheme } from '../../theme/ThemeContext';
 import { useBreakpoint } from '../../hooks/useBreakpoint';
@@ -115,7 +115,7 @@ export default function MarginTrends() {
       className="fade-in-up"
       style={{
         ...glassCard,
-        ...(isMobile ? { padding: '12px 14px' } : {}),
+        ...(isMobile ? { padding: '16px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         animationDelay: '0.1s',
@@ -136,7 +136,7 @@ export default function MarginTrends() {
         <div
           style={{
             fontFamily: FONTS.header.family,
-            fontSize: 10,
+            fontSize: isMobile ? 14 : SIZES.panelTitle,
             fontWeight: FONTS.header.weight,
             textTransform: FONTS.header.transform,
             letterSpacing: FONTS.header.letterSpacing,
@@ -162,7 +162,7 @@ export default function MarginTrends() {
               <span
                 style={{
                   fontFamily: FONTS.body.family,
-                  fontSize: isMobile ? 9 : 7,
+                  fontSize: isMobile ? 11 : 7,
                   color: 'var(--text-secondary)',
                 }}
               >
@@ -212,7 +212,7 @@ export default function MarginTrends() {
                   textAnchor="end"
                   style={{
                     fontFamily: FONTS.label.family,
-                    fontSize: 7,
+                    fontSize: isMobile ? 9 : 7,
                     fill: 'var(--text-muted)',
                   }}
                 >
@@ -231,7 +231,7 @@ export default function MarginTrends() {
               textAnchor="middle"
               style={{
                 fontFamily: FONTS.label.family,
-                fontSize: 7,
+                fontSize: isMobile ? 9 : 7,
                 fill: 'var(--text-muted)',
               }}
             >

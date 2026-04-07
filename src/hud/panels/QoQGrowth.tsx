@@ -48,7 +48,7 @@ const QoQGrowth: React.FC<QoQGrowthProps> = ({ isMobile = false }) => {
       <div
         style={{
           fontFamily: "'Roboto Mono', monospace",
-          fontSize: 9,
+          fontSize: isMobile ? 13 : 9,
           fontWeight: 500,
           letterSpacing: '0.05em',
           color: 'var(--text-muted)',
@@ -76,7 +76,7 @@ const QoQGrowth: React.FC<QoQGrowthProps> = ({ isMobile = false }) => {
             <span
               style={{
                 fontFamily: "'Roboto Mono', monospace",
-                fontSize: 8,
+                fontSize: isMobile ? 11 : 8,
                 fontWeight: 400,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
@@ -88,7 +88,7 @@ const QoQGrowth: React.FC<QoQGrowthProps> = ({ isMobile = false }) => {
             <span
               style={{
                 fontFamily: "'Roboto Mono', monospace",
-                fontSize: 10,
+                fontSize: isMobile ? 13 : 10,
                 fontWeight: 600,
                 color: mapColor(item.color),
               }}
@@ -103,7 +103,7 @@ const QoQGrowth: React.FC<QoQGrowthProps> = ({ isMobile = false }) => {
       <div
         style={{
           borderTop: '1px solid var(--divider)',
-          margin: '6px 0 8px',
+          margin: isMobile ? '10px 0 12px' : '6px 0 8px',
           flexShrink: 0,
         }}
       />
@@ -121,7 +121,7 @@ const QoQGrowth: React.FC<QoQGrowthProps> = ({ isMobile = false }) => {
             <div
               style={{
                 fontFamily: "'Roboto Mono', monospace",
-                fontSize: 9,
+                fontSize: isMobile ? 11 : 9,
                 fontWeight: 400,
                 textTransform: 'uppercase',
                 letterSpacing: '0.04em',

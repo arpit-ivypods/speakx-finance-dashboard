@@ -27,7 +27,7 @@ const TitleBlock: React.FC<{ isMobile: boolean }> = ({ isMobile }) => (
     <span
       style={{
         fontFamily: FONTS.header.family,
-        fontSize: isMobile ? 10 : SIZES.headerBar,
+        fontSize: isMobile ? 11 : SIZES.headerBar,
         fontWeight: FONTS.header.weight,
         textTransform: 'uppercase',
         letterSpacing: FONTS.header.letterSpacing,
@@ -147,7 +147,7 @@ const Header: React.FC = () => {
     justifyContent: 'space-between',
     background: 'var(--bg-card)',
     borderBottom: '1px solid var(--border-card)',
-    padding: isMobile ? '0 12px' : '0 20px',
+    padding: isMobile ? '0 16px' : '0 20px',
     boxSizing: 'border-box',
     borderRadius: '8px 8px 0 0',
   };

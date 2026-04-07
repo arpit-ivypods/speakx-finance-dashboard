@@ -10,7 +10,7 @@ const LeftColumn = () => {
     <div style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: isCompact ? '10px' : '12px',
+      gap: isCompact ? '12px' : '12px',
       width: isDesktop ? '40%' : '100%',
       height: isDesktop ? '100%' : undefined,
       minWidth: 0,
