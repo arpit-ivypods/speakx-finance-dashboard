@@ -149,7 +149,7 @@ function DonutChart({ mapColor, isMobile }: { mapColor: (c: string) => string; i
         <div
           style={{
             fontFamily: FONTS.label.family,
-            fontSize: isMobile ? 9 : 7,
+            fontSize: isMobile ? 11 : 7,
             color: 'var(--text-muted)',
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
@@ -309,7 +309,7 @@ export default function FinancialAnalysis() {
                   <span
                     style={{
                       fontFamily: FONTS.label.family,
-                      fontSize: isMobile ? 10 : 8,
+                      fontSize: isMobile ? 11 : 8,
                       color: mapColor(seg.color),
                       opacity: 0.6,
                       background: `${mapColor(seg.color)}12`,
