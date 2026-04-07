@@ -1,0 +1,324 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { operatingExpenses } from '../../data/mockData';
+
+/* ── Glass card ─────────────────────────────────────── */
+
+const glassStyle: React.CSSProperties = {
+  background: 'rgba(10, 16, 30, 0.70)',
+  border: '1px solid rgba(255, 255, 255, 0.15)',
+  borderRadius: 8,
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+  padding: '14px 18px',
+  height: '100%',
+  overflow: 'hidden',
+  boxSizing: 'border-box',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
+};
+
+const glassHover: React.CSSProperties = {
+  boxShadow: '0 0 25px rgba(0,255,204,0.12), inset 0 0 25px rgba(0,255,204,0.04)',
+  borderColor: 'rgba(0,255,204,0.30)',
+};
+
+/* ── Bar constants ──────────────────────────────────── */
+
+const BAR_WIDTH = 30;
+const BAR_GAP = 14;
+
+const barMeta: Record<string, number> = {
+  Q1: 0.66,
+  Q2: 0.73,
+  Q3: 0.80,
+  Q4: 1.0,
+};
+
+/* ── growUp keyframes ───────────────────────────────── */
+
+const growUpStyleId = 'grow-up-keyframes';
+if (typeof document !== 'undefined' && !document.getElementById(growUpStyleId)) {
+  const style = document.createElement('style');
+  style.id = growUpStyleId;
+  style.textContent = `
+    @keyframes growUp {
+      from { transform: scaleY(0); }
+      to   { transform: scaleY(1); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+/* ── Single bar ─────────────────────────────────────── */
+
+const Bar: React.FC<{
+  label: string;
+  value: number;
+  unit: string;
+  color: string;
+  heightFraction: number;
+  index: number;
+}> = ({ label, value, unit, color, heightFraction, index }) => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: BAR_WIDTH,
+        flex: '0 0 auto',
+      }}
+    >
+      {/* Value label */}
+      <span
+        className="fade-in"
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 10,
+          fontWeight: 700,
+          color,
+          marginBottom: 4,
+          flexShrink: 0,
+          animationDelay: `${index * 0.1 + 0.4}s`,
+          filter: `drop-shadow(0 0 4px ${color}40)`,
+        }}
+      >
+        {value.toFixed(1)}{unit}
+      </span>
+
+      {/* Bar area */}
+      <div
+        style={{
+          width: BAR_WIDTH,
+          flex: 1,
+          minHeight: 0,
+          display: 'flex',
+          alignItems: 'flex-end',
+          position: 'relative',
+        }}
+      >
+        {/* Subtle background track */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            borderRadius: '4px 4px 0 0',
+            background: 'rgba(255,255,255,0.03)',
+          }}
+        />
+        <motion.div
+          style={{
+            width: BAR_WIDTH,
+            height: `${heightFraction * 100}%`,
+            borderRadius: '4px 4px 0 0',
+            background: `linear-gradient(to bottom, ${color}, ${color}30)`,
+            filter: hovered
+              ? `drop-shadow(0 0 14px ${color}90)`
+              : `drop-shadow(0 0 6px ${color}4D)`,
+            cursor: 'pointer',
+            transformOrigin: 'bottom',
+            animation: `growUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s both`,
+            position: 'relative',
+            zIndex: 1,
+          }}
+          whileHover={{ scaleY: 1.05 }}
+          transition={{ scaleY: { duration: 0.2 } }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        />
+      </div>
+
+      {/* X-axis label */}
+      <span
+        style={{
+          fontFamily: "'Roboto Mono', monospace",
+          fontSize: 9,
+          fontWeight: 400,
+          color: '#8A8F98',
+          marginTop: 5,
+          flexShrink: 0,
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+};
+
+/* ── Breakdown row with mini progress bar ───────────── */
+
+const BreakdownRow: React.FC<{
+  category: string;
+  pct: number;
+  color: string;
+  maxPct: number;
+  index: number;
+}> = ({ category, pct, color, maxPct, index }) => (
+  <div
+    className="fade-in"
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 3,
+      animationDelay: `${index * 0.08}s`,
+    }}
+  >
+    {/* Label + percentage row */}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+      <div
+        style={{
+          width: 3,
+          height: 12,
+          borderRadius: 1.5,
+          background: color,
+          boxShadow: `0 0 4px ${color}60`,
+          flexShrink: 0,
+        }}
+      />
+      <span
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 9,
+          fontWeight: 400,
+          color: '#B0B7C3',
+          flex: 1,
+        }}
+      >
+        {category}
+      </span>
+      <span
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 10,
+          fontWeight: 700,
+          color,
+          filter: `drop-shadow(0 0 4px ${color}30)`,
+        }}
+      >
+        {pct}%
+      </span>
+    </div>
+
+    {/* Mini progress bar */}
+    <div
+      style={{
+        height: 2,
+        borderRadius: 1,
+        background: 'rgba(255,255,255,0.04)',
+        marginLeft: 9,
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{
+          width: `${(pct / maxPct) * 100}%`,
+          height: '100%',
+          borderRadius: 1,
+          background: `linear-gradient(90deg, ${color}, ${color}60)`,
+          boxShadow: `0 0 4px ${color}40`,
+        }}
+      />
+    </div>
+  </div>
+);
+
+/* ── Main component ─────────────────────────────────── */
+
+const OperatingExpenses: React.FC = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const maxPct = Math.max(...operatingExpenses.breakdown.map((b) => b.pct));
+
+  return (
+    <div
+      style={{
+        ...glassStyle,
+        ...(isHovered ? glassHover : {}),
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Title */}
+      <div
+        style={{
+          fontFamily: "'Orbitron', monospace",
+          fontSize: 11,
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          color: '#FFFFFF',
+          marginBottom: 10,
+          flexShrink: 0,
+        }}
+      >
+        OPERATING EXPENSES
+      </div>
+
+      {/* Two-column layout */}
+      <div style={{ display: 'flex', gap: 14, flex: 1, minHeight: 0, overflow: 'hidden' }}>
+        {/* Left: Bar chart */}
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: BAR_GAP,
+            alignItems: 'stretch',
+          }}
+        >
+          {operatingExpenses.quarters.map((q, i) => (
+            <Bar
+              key={q.label}
+              label={q.label}
+              value={q.value}
+              unit={q.unit}
+              color={q.color}
+              heightFraction={barMeta[q.label]}
+              index={i}
+            />
+          ))}
+        </div>
+
+        {/* Gradient divider */}
+        <div
+          style={{
+            width: 1,
+            background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.1), transparent)',
+            flexShrink: 0,
+          }}
+        />
+
+        {/* Right: Breakdown with progress bars */}
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-evenly',
+          }}
+        >
+          {operatingExpenses.breakdown.map((item, i) => (
+            <BreakdownRow
+              key={item.category}
+              category={item.category}
+              pct={item.pct}
+              color={item.color}
+              maxPct={maxPct}
+              index={i}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OperatingExpenses;
