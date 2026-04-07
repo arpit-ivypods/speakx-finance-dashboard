@@ -17,10 +17,6 @@ const glassCard: React.CSSProperties = {
   transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
 };
 
-const glassCardHover: React.CSSProperties = {
-  boxShadow: 'var(--hover-glow)',
-  borderColor: 'var(--hover-border)',
-};
 
 function RangeBar({ mapColor }: { mapColor: (c: string) => string }) {
   const { low, high, unit, currency } = forecast.revenueRange;
@@ -88,7 +84,7 @@ export default function ForecastPanel() {
     <div
       style={{
         ...glassCard,
-        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         height: '100%',
         justifyContent: 'center',

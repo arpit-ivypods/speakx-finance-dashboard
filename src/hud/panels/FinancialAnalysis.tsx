@@ -21,11 +21,6 @@ const glassCard: React.CSSProperties = {
   transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
 };
 
-const glassCardHover: React.CSSProperties = {
-  boxShadow: 'var(--hover-glow)',
-  borderColor: 'var(--hover-border)',
-};
-
 /* ── Donut geometry helpers ─────────────────────────── */
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
@@ -223,7 +218,7 @@ export default function FinancialAnalysis() {
       className="fade-in-up"
       style={{
         ...glassCard,
-        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
       onMouseEnter={() => setIsHovered(true)}

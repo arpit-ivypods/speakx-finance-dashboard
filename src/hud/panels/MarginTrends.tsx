@@ -18,10 +18,6 @@ const glassCard: React.CSSProperties = {
   transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
 };
 
-const glassCardHover: React.CSSProperties = {
-  boxShadow: 'var(--hover-glow)',
-  borderColor: 'var(--hover-border)',
-};
 
 interface TooltipData {
   x: number;
@@ -117,7 +113,7 @@ export default function MarginTrends() {
       className="fade-in-up"
       style={{
         ...glassCard,
-        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         animationDelay: '0.1s',
       }}

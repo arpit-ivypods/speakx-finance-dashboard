@@ -21,10 +21,6 @@ const glassStyle: React.CSSProperties = {
   transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
 };
 
-const glassHover: React.CSSProperties = {
-  boxShadow: 'var(--hover-glow)',
-  borderColor: 'var(--hover-border)',
-};
 
 /* ── Bar constants ──────────────────────────────────── */
 
@@ -243,7 +239,7 @@ const OperatingExpenses: React.FC = () => {
     <div
       style={{
         ...glassStyle,
-        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
       onMouseEnter={() => setIsHovered(true)}

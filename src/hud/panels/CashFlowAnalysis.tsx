@@ -17,10 +17,6 @@ const glassCard: React.CSSProperties = {
   transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
 };
 
-const glassCardHover: React.CSSProperties = {
-  boxShadow: 'var(--hover-glow)',
-  borderColor: 'var(--hover-border)',
-};
 
 interface KPIRowProps {
   label: string;
@@ -94,7 +90,7 @@ export default function CashFlowAnalysis() {
     <div
       style={{
         ...glassCard,
-        borderColor: isHovered ? 'var(--hover-border)' : undefined,
+        borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         height: '100%',
         justifyContent: 'center',
