@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { forecast } from '../../data/mockData';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { useTheme } from '../../theme/ThemeContext';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
 
 const glassCard: React.CSSProperties = {
   background: 'var(--bg-card)',
@@ -18,11 +19,11 @@ const glassCard: React.CSSProperties = {
 };
 
 
-function RangeBar({ mapColor }: { mapColor: (c: string) => string }) {
+function RangeBar({ mapColor, isMobile }: { mapColor: (c: string) => string; isMobile: boolean }) {
   const { low, high, unit, currency } = forecast.revenueRange;
 
   return (
-    <div style={{ marginTop: 8, marginBottom: 8 }}>
+    <div style={{ marginTop: isMobile ? 4 : 8, marginBottom: isMobile ? 4 : 8 }}>
       <div
         style={{
           width: '100%',
@@ -79,11 +80,13 @@ function RangeBar({ mapColor }: { mapColor: (c: string) => string }) {
 export default function ForecastPanel() {
   const [isHovered, setIsHovered] = useState(false);
   const { mapColor } = useTheme();
+  const { isMobile } = useBreakpoint();
 
   return (
     <div
       style={{
         ...glassCard,
+        ...(isMobile ? { padding: '12px 14px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         height: '100%',
@@ -100,7 +103,7 @@ export default function ForecastPanel() {
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
           color: 'var(--text-primary)',
-          marginBottom: 8,
+          marginBottom: isMobile ? 6 : 8,
           flexShrink: 0,
         }}
       >
@@ -108,7 +111,7 @@ export default function ForecastPanel() {
       </div>
 
       {/* Projected Revenue */}
-      <div style={{ marginBottom: 4 }}>
+      <div style={{ marginBottom: isMobile ? 2 : 4 }}>
         <div
           style={{
             fontFamily: "'Roboto Mono', monospace",
@@ -155,7 +158,7 @@ export default function ForecastPanel() {
       </div>
 
       {/* Range Bar */}
-      <RangeBar mapColor={mapColor} />
+      <RangeBar mapColor={mapColor} isMobile={isMobile} />
 
       {/* Projected Net Income */}
       <div>

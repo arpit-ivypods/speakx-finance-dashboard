@@ -64,7 +64,7 @@ const FinancialKPIs: React.FC = () => {
         border: '1px solid var(--border-card)',
         borderRadius: 8,
         backdropFilter: 'blur(10px)',
-        padding: '16px 20px',
+        padding: isMobile ? '12px 14px' : '16px 20px',
         height: '100%',
         boxSizing: 'border-box',
         overflow: 'hidden',
@@ -98,6 +98,7 @@ const FinancialKPIs: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 8,
+                ...(isMobile ? { minHeight: 40 } : {}),
                 borderBottom:
                   index < kpiRows.length - 1
                     ? '1px solid var(--divider)'
@@ -114,7 +115,7 @@ const FinancialKPIs: React.FC = () => {
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                   color: 'var(--text-muted)',
-                  minWidth: 105,
+                  minWidth: isMobile ? 80 : 105,
                   flexShrink: 0,
                 }}
               >
@@ -135,18 +136,21 @@ const FinancialKPIs: React.FC = () => {
               </span>
 
               {kpi.sparkline && (
-                <Sparkline data={kpi.sparkline} color={mapColor(kpi.color)} width={60} height={22} animated />
+                <Sparkline data={kpi.sparkline} color={mapColor(kpi.color)} width={isMobile ? 50 : 60} height={isMobile ? 18 : 22} animated />
               )}
             </div>
           ))}
         </div>
 
         {/* Separator */}
-        {!isMobile && <div style={{ width: 1, background: 'var(--border-subtle)', flexShrink: 0 }} />}
+        {isMobile
+          ? <div style={{ height: 1, background: 'var(--border-subtle)', flexShrink: 0 }} />
+          : <div style={{ width: 1, background: 'var(--border-subtle)', flexShrink: 0 }} />
+        }
 
         {/* Right: QoQ Growth */}
-        <div style={{ flex: 1.2, minWidth: 0, overflow: 'hidden' }}>
-          <QoQGrowth />
+        <div style={{ flex: 1.2, minWidth: 0, overflow: 'hidden', ...(isMobile ? { paddingTop: 12 } : {}) }}>
+          <QoQGrowth isMobile={isMobile} />
         </div>
       </div>
     </div>

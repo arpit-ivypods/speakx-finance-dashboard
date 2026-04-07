@@ -19,7 +19,7 @@ const LeftColumn = () => {
         className="fade-in-left"
         style={{
           flex: isDesktop ? '55 1 0%' : undefined,
-          minHeight: isCompact ? 320 : 0,
+          minHeight: isCompact ? 400 : 0,
           animationDelay: '0.3s',
         }}
       >
@@ -29,7 +29,7 @@ const LeftColumn = () => {
         className="fade-in-left"
         style={{
           flex: isDesktop ? '45 1 0%' : undefined,
-          minHeight: isCompact ? 280 : 0,
+          minHeight: isCompact ? 320 : 0,
           animationDelay: '0.4s',
         }}
       >

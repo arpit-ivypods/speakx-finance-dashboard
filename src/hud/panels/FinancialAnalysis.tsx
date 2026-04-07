@@ -165,11 +165,11 @@ function DonutChart({ mapColor }: { mapColor: (c: string) => string }) {
 
 /* ── Mini Sparkline ─────────────────────────────────── */
 
-function MiniSparkline({ mapColor }: { mapColor: (c: string) => string }) {
+function MiniSparkline({ mapColor, height = 24 }: { mapColor: (c: string) => string; height?: number }) {
   const id = useId();
   const { sparkline } = financialAnalysis.revenueComposition;
   const w = 140;
-  const h = 24;
+  const h = height;
   const padY = 2;
 
   const min = Math.min(...sparkline);
@@ -218,6 +218,7 @@ export default function FinancialAnalysis() {
       className="fade-in-up"
       style={{
         ...glassCard,
+        ...(isMobile ? { padding: '12px 14px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
@@ -243,7 +244,7 @@ export default function FinancialAnalysis() {
       {/* 3-column layout: Donut | Legend | Revenue Composition */}
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 16, flex: 1, minHeight: 0, overflow: isMobile ? 'auto' : 'hidden', alignItems: isMobile ? 'center' : undefined }}>
         {/* Col 1: Donut chart */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'center' : undefined, flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'center' : undefined, flexShrink: 0, ...(isMobile ? { alignSelf: 'center' } : {}) }}>
           <DonutChart mapColor={mapColor} />
         </div>
 
@@ -253,9 +254,10 @@ export default function FinancialAnalysis() {
             flex: 1,
             minWidth: 0,
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: isMobile ? 'row' : 'column',
+            flexWrap: isMobile ? 'wrap' : undefined,
             justifyContent: 'center',
-            gap: 10,
+            gap: isMobile ? 12 : 10,
           }}
         >
           {segments.map((seg, i) => (
@@ -295,7 +297,7 @@ export default function FinancialAnalysis() {
                   <span
                     style={{
                       fontFamily: FONTS.data.family,
-                      fontSize: 15,
+                      fontSize: isMobile ? 13 : 15,
                       fontWeight: 700,
                       color: mapColor(seg.color),
                       filter: `drop-shadow(0 0 6px ${mapColor(seg.color)}40)`,
@@ -407,7 +409,7 @@ export default function FinancialAnalysis() {
             ))}
           </div>
 
-          <MiniSparkline mapColor={mapColor} />
+          <MiniSparkline mapColor={mapColor} height={isMobile ? 36 : 24} />
         </div>
       </div>
     </div>

@@ -35,8 +35,12 @@ const TitleBlock: React.FC<{ isMobile: boolean }> = ({ isMobile }) => (
         whiteSpace: 'nowrap',
       }}
     >
-      SPEAKX <span style={{ color: 'var(--text-muted)' }}>|</span> YEARLY PERFORMANCE REPORT{' '}
-      <span style={{ color: 'var(--text-muted)' }}>|</span> FY 2124
+      {isMobile ? (
+        <>SPEAKX <span style={{ color: 'var(--text-muted)' }}>|</span> FY 2124</>
+      ) : (
+        <>SPEAKX <span style={{ color: 'var(--text-muted)' }}>|</span> YEARLY PERFORMANCE REPORT{' '}
+        <span style={{ color: 'var(--text-muted)' }}>|</span> FY 2124</>
+      )}
     </span>
     {!isMobile && (
       <span
@@ -54,14 +58,14 @@ const TitleBlock: React.FC<{ isMobile: boolean }> = ({ isMobile }) => (
   </div>
 );
 
-const StatusDots: React.FC = () => (
+const StatusDots: React.FC<{ isMobile: boolean }> = ({ isMobile }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
     {[0, 1, 2].map((i) => (
       <div
         key={i}
         style={{
-          width: 8,
-          height: 8,
+          width: isMobile ? 6 : 8,
+          height: isMobile ? 6 : 8,
           borderRadius: '50%',
           background: 'var(--accent-cyan)',
           boxShadow: '0 0 6px var(--accent-cyan)',
@@ -73,13 +77,13 @@ const StatusDots: React.FC = () => (
   </div>
 );
 
-const ThemeToggleButton: React.FC<{ isDark: boolean; toggle: () => void }> = ({ isDark, toggle }) => (
+const ThemeToggleButton: React.FC<{ isDark: boolean; toggle: () => void; isMobile: boolean }> = ({ isDark, toggle, isMobile }) => (
   <button
     onClick={toggle}
     aria-label="Toggle theme"
     style={{
-      width: 28,
-      height: 28,
+      width: isMobile ? 24 : 28,
+      height: isMobile ? 24 : 28,
       borderRadius: '50%',
       background: 'var(--bg-card)',
       border: '1px solid var(--border-card)',
@@ -141,7 +145,7 @@ const Header: React.FC = () => {
     justifyContent: 'space-between',
     background: 'var(--bg-card)',
     borderBottom: '1px solid var(--border-card)',
-    padding: '0 20px',
+    padding: isMobile ? '0 12px' : '0 20px',
     boxSizing: 'border-box',
     borderRadius: '8px 8px 0 0',
   };
@@ -152,14 +156,14 @@ const Header: React.FC = () => {
         <SpeakXLogo size={isMobile ? 28 : 32} />
         <TitleBlock isMobile={isMobile} />
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <StatusDots />
-        <ThemeToggleButton isDark={isDark} toggle={toggle} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 10 : 16 }}>
+        <StatusDots isMobile={isMobile} />
+        <ThemeToggleButton isDark={isDark} toggle={toggle} isMobile={isMobile} />
         <CalendarIcon />
         <span
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            fontSize: SIZES.statusDate,
+            fontSize: isMobile ? 9 : SIZES.statusDate,
             fontWeight: 400,
             color: 'var(--text-muted)',
             whiteSpace: 'nowrap',

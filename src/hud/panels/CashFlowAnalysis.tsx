@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { cashFlow } from '../../data/mockData';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { useTheme } from '../../theme/ThemeContext';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
 
 const glassCard: React.CSSProperties = {
   background: 'var(--bg-card)',
@@ -80,6 +81,7 @@ function KPIRow({ label, value, unit, currency, color }: KPIRowProps) {
 export default function CashFlowAnalysis() {
   const [isHovered, setIsHovered] = useState(false);
   const { mapColor } = useTheme();
+  const { isMobile } = useBreakpoint();
 
   const kpis = [
     { ...cashFlow.netCashFromOps, displayLabel: 'NET CASH FROM OPS' },
@@ -90,6 +92,7 @@ export default function CashFlowAnalysis() {
     <div
       style={{
         ...glassCard,
+        ...(isMobile ? { padding: '12px 14px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         height: '100%',

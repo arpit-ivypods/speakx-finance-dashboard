@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FONTS } from '../../theme/typography';
 import { marginTrends } from '../../data/mockData';
 import { useTheme } from '../../theme/ThemeContext';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
 
 const glassCard: React.CSSProperties = {
   background: 'var(--bg-card)',
@@ -77,6 +78,7 @@ function buildAreaPath(points: { x: number; y: number }[]): string {
 
 export default function MarginTrends() {
   const { mapColor } = useTheme();
+  const { isMobile } = useBreakpoint();
   const [isHovered, setIsHovered] = useState(false);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [animProgress, setAnimProgress] = useState(0);
@@ -113,6 +115,7 @@ export default function MarginTrends() {
       className="fade-in-up"
       style={{
         ...glassCard,
+        ...(isMobile ? { padding: '12px 14px' } : {}),
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
         animationDelay: '0.1s',
@@ -144,7 +147,7 @@ export default function MarginTrends() {
         </div>
 
         {/* Legend */}
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: isMobile ? 'wrap' : undefined }}>
           {series.map((s, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
               <div
@@ -159,7 +162,7 @@ export default function MarginTrends() {
               <span
                 style={{
                   fontFamily: FONTS.body.family,
-                  fontSize: 7,
+                  fontSize: isMobile ? 9 : 7,
                   color: 'var(--text-secondary)',
                 }}
               >
@@ -171,7 +174,7 @@ export default function MarginTrends() {
       </div>
 
       {/* Chart */}
-      <div style={{ position: 'relative', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+      <div style={{ position: 'relative', flex: 1, minHeight: isMobile ? 180 : 0, overflow: 'hidden' }}>
         <svg
           width="100%"
           height="100%"

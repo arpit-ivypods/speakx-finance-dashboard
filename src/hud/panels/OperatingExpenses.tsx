@@ -25,7 +25,8 @@ const glassStyle: React.CSSProperties = {
 /* ── Bar constants ──────────────────────────────────── */
 
 const BAR_WIDTH = 30;
-const BAR_GAP = 14;
+const BAR_GAP_DESKTOP = 14;
+const BAR_GAP_MOBILE = 10;
 
 const barMeta: Record<string, number> = {
   Q1: 0.66,
@@ -234,11 +235,13 @@ const OperatingExpenses: React.FC = () => {
   const { isMobile } = useBreakpoint();
   const [isHovered, setIsHovered] = useState(false);
   const maxPct = Math.max(...operatingExpenses.breakdown.map((b) => b.pct));
+  const barGap = isMobile ? BAR_GAP_MOBILE : BAR_GAP_DESKTOP;
 
   return (
     <div
       style={{
         ...glassStyle,
+        padding: isMobile ? '12px 14px' : '14px 18px',
         borderColor: isHovered ? 'var(--hover-border)' : 'var(--border-card)',
         boxShadow: isHovered ? 'var(--hover-glow)' : 'none',
       }}
@@ -266,11 +269,12 @@ const OperatingExpenses: React.FC = () => {
         {/* Left: Bar chart */}
         <div
           style={{
-            flex: 1,
+            flex: isMobile ? undefined : 1,
+            height: isMobile ? 140 : undefined,
             minWidth: 0,
             display: 'flex',
             justifyContent: 'center',
-            gap: BAR_GAP,
+            gap: barGap,
             alignItems: 'stretch',
           }}
         >
@@ -287,8 +291,18 @@ const OperatingExpenses: React.FC = () => {
           ))}
         </div>
 
-        {/* Gradient divider */}
-        {!isMobile && (
+        {/* Divider */}
+        {isMobile ? (
+          <div
+            style={{
+              height: 1,
+              background: isDark
+                ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)'
+                : 'linear-gradient(90deg, transparent, var(--divider), transparent)',
+              flexShrink: 0,
+            }}
+          />
+        ) : (
           <div
             style={{
               width: 1,
@@ -303,7 +317,7 @@ const OperatingExpenses: React.FC = () => {
         {/* Right: Breakdown with progress bars */}
         <div
           style={{
-            flex: 1,
+            flex: isMobile ? undefined : 1,
             minWidth: 0,
             display: 'flex',
             flexDirection: 'column',

@@ -20,7 +20,7 @@ const RightColumn = () => {
         className="fade-in-right"
         style={{
           flex: isDesktop ? '30 1 0%' : undefined,
-          minHeight: isMobile ? 280 : 0,
+          minHeight: isMobile ? 420 : 0,
           animationDelay: '0.5s',
         }}
       >
@@ -30,7 +30,7 @@ const RightColumn = () => {
         className="fade-in-right"
         style={{
           flex: isDesktop ? '35 1 0%' : undefined,
-          minHeight: isMobile ? 300 : 0,
+          minHeight: isMobile ? 280 : 0,
           animationDelay: '0.6s',
         }}
       >
@@ -40,7 +40,7 @@ const RightColumn = () => {
         className="fade-in-up"
         style={{
           flex: isDesktop ? '30 1 0%' : undefined,
-          minHeight: isMobile ? 200 : 0,
+          minHeight: isMobile ? 0 : 0,
           animationDelay: '0.7s',
         }}
       >
@@ -50,7 +50,7 @@ const RightColumn = () => {
           gap: isMobile ? '10px' : '12px',
           height: isDesktop ? '100%' : undefined,
         }}>
-          <div style={{ flex: 1, minWidth: 0, minHeight: isMobile ? 200 : undefined }}>
+          <div style={{ flex: 1, minWidth: 0, minHeight: isMobile ? 180 : undefined }}>
             <CashFlowAnalysis />
           </div>
           <div style={{ flex: 1, minWidth: 0, minHeight: isMobile ? 200 : undefined }}>

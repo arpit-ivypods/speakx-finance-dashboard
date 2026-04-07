@@ -3,7 +3,11 @@ import { qoqGrowth, additionalMetrics } from '../../data/mockData';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { useTheme } from '../../theme/ThemeContext';
 
-const QoQGrowth: React.FC = () => {
+interface QoQGrowthProps {
+  isMobile?: boolean;
+}
+
+const QoQGrowth: React.FC<QoQGrowthProps> = ({ isMobile = false }) => {
   const { mapColor } = useTheme();
 
   const growthItems = [
@@ -105,7 +109,7 @@ const QoQGrowth: React.FC = () => {
       />
 
       {/* Metric items - stacked label above value */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 16, minHeight: 0 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: isMobile ? 10 : 16, minHeight: 0 }}>
         {metricItems.map((item, i) => (
           <div
             key={item.label}
@@ -131,7 +135,7 @@ const QoQGrowth: React.FC = () => {
             <div
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: 36,
+                fontSize: isMobile ? 24 : 36,
                 fontWeight: 700,
                 color: mapColor(item.color),
                 filter: `drop-shadow(0 0 8px ${mapColor(item.color)}50)`,
