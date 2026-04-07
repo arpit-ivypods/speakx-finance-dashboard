@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { forecast } from '../../data/mockData';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { useTheme } from '../../theme/ThemeContext';
 
 const glassCard: React.CSSProperties = {
-  background: 'rgba(10, 16, 30, 0.70)',
-  border: '1px solid rgba(255, 255, 255, 0.15)',
+  background: 'var(--bg-card)',
+  border: '1px solid var(--border-card)',
   borderRadius: 8,
   backdropFilter: 'blur(10px)',
   WebkitBackdropFilter: 'blur(10px)',
@@ -17,11 +18,11 @@ const glassCard: React.CSSProperties = {
 };
 
 const glassCardHover: React.CSSProperties = {
-  boxShadow: '0 0 25px rgba(0,255,204,0.12), inset 0 0 25px rgba(0,255,204,0.04)',
-  borderColor: 'rgba(0,255,204,0.30)',
+  boxShadow: 'var(--hover-glow)',
+  borderColor: 'var(--hover-border)',
 };
 
-function RangeBar() {
+function RangeBar({ mapColor }: { mapColor: (c: string) => string }) {
   const { low, high, unit, currency } = forecast.revenueRange;
 
   return (
@@ -31,7 +32,7 @@ function RangeBar() {
           width: '100%',
           height: 2,
           borderRadius: 1,
-          background: 'rgba(255,255,255,0.08)',
+          background: 'var(--chart-gridline)',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -44,8 +45,8 @@ function RangeBar() {
             width: '100%',
             height: '100%',
             borderRadius: 1,
-            background: 'linear-gradient(90deg, #00FFCC, #BF5AF2)',
-            boxShadow: '0 0 6px rgba(0,255,204,0.4)',
+            background: `linear-gradient(90deg, ${mapColor('#00FFCC')}, ${mapColor('#BF5AF2')})`,
+            boxShadow: `0 0 6px ${mapColor('#00FFCC')}66`,
           }}
         />
       </div>
@@ -60,7 +61,7 @@ function RangeBar() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: 8,
-            color: '#8A8F98',
+            color: 'var(--text-muted)',
           }}
         >
           {formatCurrency(low, unit, currency)}
@@ -69,7 +70,7 @@ function RangeBar() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: 8,
-            color: '#8A8F98',
+            color: 'var(--text-muted)',
           }}
         >
           {formatCurrency(high, unit, currency)}
@@ -81,6 +82,7 @@ function RangeBar() {
 
 export default function ForecastPanel() {
   const [isHovered, setIsHovered] = useState(false);
+  const { mapColor } = useTheme();
 
   return (
     <div
@@ -100,7 +102,7 @@ export default function ForecastPanel() {
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
-          color: '#FFFFFF',
+          color: 'var(--text-primary)',
           marginBottom: 8,
           flexShrink: 0,
         }}
@@ -117,7 +119,7 @@ export default function ForecastPanel() {
             fontWeight: 500,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            color: '#8A8F98',
+            color: 'var(--text-muted)',
             marginBottom: 4,
           }}
         >
@@ -128,8 +130,8 @@ export default function ForecastPanel() {
             fontFamily: "'Inter', sans-serif",
             fontSize: 18,
             fontWeight: 700,
-            color: '#00FFCC',
-            filter: 'drop-shadow(0 0 8px rgba(0,255,204,0.4))',
+            color: mapColor('#00FFCC'),
+            filter: `drop-shadow(0 0 8px ${mapColor('#00FFCC')}66)`,
             lineHeight: 1,
           }}
         >
@@ -146,7 +148,7 @@ export default function ForecastPanel() {
         style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 8,
-          color: '#8A8F98',
+          color: 'var(--text-muted)',
           marginBottom: 2,
         }}
       >
@@ -156,7 +158,7 @@ export default function ForecastPanel() {
       </div>
 
       {/* Range Bar */}
-      <RangeBar />
+      <RangeBar mapColor={mapColor} />
 
       {/* Projected Net Income */}
       <div>
@@ -167,7 +169,7 @@ export default function ForecastPanel() {
             fontWeight: 500,
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            color: '#8A8F98',
+            color: 'var(--text-muted)',
             marginBottom: 4,
           }}
         >
@@ -178,8 +180,8 @@ export default function ForecastPanel() {
             fontFamily: "'Inter', sans-serif",
             fontSize: 18,
             fontWeight: 700,
-            color: '#00FFCC',
-            filter: 'drop-shadow(0 0 8px rgba(0,255,204,0.4))',
+            color: mapColor('#00FFCC'),
+            filter: `drop-shadow(0 0 8px ${mapColor('#00FFCC')}66)`,
             lineHeight: 1,
           }}
         >

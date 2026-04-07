@@ -3,6 +3,8 @@ import { financialKPIs } from '../../data/mockData';
 import { formatCurrency, formatPercent } from '../../utils/formatCurrency';
 import Sparkline from '../shared/Sparkline';
 import QoQGrowth from './QoQGrowth';
+import { useTheme } from '../../theme/ThemeContext';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
 
 interface KpiRow {
   label: string;
@@ -51,12 +53,15 @@ const kpiRows: KpiRow[] = [
 ];
 
 const FinancialKPIs: React.FC = () => {
+  const { mapColor } = useTheme();
+  const { isMobile } = useBreakpoint();
+
   return (
     <div
       className="fade-in"
       style={{
-        background: 'rgba(10, 16, 30, 0.70)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-card)',
         borderRadius: 8,
         backdropFilter: 'blur(10px)',
         padding: '16px 20px',
@@ -74,7 +79,7 @@ const FinancialKPIs: React.FC = () => {
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
-          color: '#FFFFFF',
+          color: 'var(--text-primary)',
           marginBottom: 10,
           flexShrink: 0,
         }}
@@ -82,7 +87,7 @@ const FinancialKPIs: React.FC = () => {
         FINANCIAL KPIs
       </div>
 
-      <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 16, flex: 1, minHeight: 0, overflow: 'hidden' }}>
         {/* Left: KPI rows */}
         <div style={{ flex: 3, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
           {kpiRows.map((kpi, index) => (
@@ -95,7 +100,7 @@ const FinancialKPIs: React.FC = () => {
                 gap: 8,
                 borderBottom:
                   index < kpiRows.length - 1
-                    ? '1px solid rgba(255,255,255,0.06)'
+                    ? '1px solid var(--divider)'
                     : 'none',
                 whiteSpace: 'nowrap',
               }}
@@ -108,7 +113,7 @@ const FinancialKPIs: React.FC = () => {
                   fontWeight: 400,
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
-                  color: '#8A8F98',
+                  color: 'var(--text-muted)',
                   minWidth: 105,
                   flexShrink: 0,
                 }}
@@ -119,10 +124,10 @@ const FinancialKPIs: React.FC = () => {
               <span
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: kpi.isPercent ? 20 : 28,
+                  fontSize: kpi.isPercent ? (isMobile ? 16 : 20) : (isMobile ? 22 : 28),
                   fontWeight: 700,
-                  color: kpi.color,
-                  filter: `drop-shadow(0 0 8px ${kpi.color}66)`,
+                  color: mapColor(kpi.color),
+                  filter: `drop-shadow(0 0 8px ${mapColor(kpi.color)}66)`,
                   lineHeight: 1,
                 }}
               >
@@ -130,14 +135,14 @@ const FinancialKPIs: React.FC = () => {
               </span>
 
               {kpi.sparkline && (
-                <Sparkline data={kpi.sparkline} color={kpi.color} width={60} height={22} animated />
+                <Sparkline data={kpi.sparkline} color={mapColor(kpi.color)} width={60} height={22} animated />
               )}
             </div>
           ))}
         </div>
 
         {/* Separator */}
-        <div style={{ width: 1, background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
+        {!isMobile && <div style={{ width: 1, background: 'var(--border-subtle)', flexShrink: 0 }} />}
 
         {/* Right: QoQ Growth */}
         <div style={{ flex: 1.2, minWidth: 0, overflow: 'hidden' }}>

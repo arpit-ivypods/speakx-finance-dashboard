@@ -2,8 +2,14 @@ import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import Background from './Background';
 import GridFloor from './GridFloor';
 import ParticleField from './ParticleField';
+import { useTheme } from '../theme/ThemeContext';
 
 function Scene() {
+  const { isDark } = useTheme();
+
+  const bloomIntensity = isDark ? 0.4 : 0.15;
+  const vignetteDarkness = isDark ? 0.6 : 0.2;
+
   return (
     <>
       <ambientLight intensity={0.15} />
@@ -15,13 +21,13 @@ function Scene() {
 
       <EffectComposer multisampling={0}>
         <Bloom
-          intensity={0.4}
+          intensity={bloomIntensity}
           luminanceThreshold={0.6}
           luminanceSmoothing={0.9}
           mipmapBlur
           radius={0.8}
         />
-        <Vignette offset={0.2} darkness={0.6} />
+        <Vignette offset={0.2} darkness={vignetteDarkness} />
       </EffectComposer>
     </>
   );

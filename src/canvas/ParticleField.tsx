@@ -1,6 +1,7 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTheme } from '../theme/ThemeContext';
 
 /**
  * Ambient floating particles.
@@ -60,6 +61,20 @@ interface ParticleData {
 
 function ParticleField() {
   const pointsRef = useRef<THREE.Points>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const { isDark } = useTheme();
+
+  useEffect(() => {
+    if (!materialRef.current) return;
+    if (isDark) {
+      materialRef.current.uniforms.uColor.value.set('#00FFCC');
+      materialRef.current.blending = THREE.AdditiveBlending;
+    } else {
+      materialRef.current.uniforms.uColor.value.set('#7C8BA1');
+      materialRef.current.blending = THREE.NormalBlending;
+    }
+    materialRef.current.needsUpdate = true;
+  }, [isDark]);
 
   const { positions, opacities, sizes, particleData } = useMemo(() => {
     const pos = new Float32Array(PARTICLE_COUNT * 3);
@@ -149,6 +164,7 @@ function ParticleField() {
         />
       </bufferGeometry>
       <shaderMaterial
+        ref={materialRef}
         transparent
         depthWrite={false}
         blending={THREE.AdditiveBlending}

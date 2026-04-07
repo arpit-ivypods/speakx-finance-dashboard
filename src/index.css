@@ -9,11 +9,15 @@
 html, body, #root {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  background: #050B14;
+  background: var(--bg-deep);
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html:not(.scrollable), body:not(.scrollable), #root:not(.scrollable) {
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -21,8 +25,31 @@ html, body, #root {
 }
 
 ::selection {
-  background: rgba(0, 255, 204, 0.3);
+  background: var(--selection-bg);
   color: #ffffff;
+}
+
+.scrollable {
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100% !important;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 2px;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 /* Entrance animations */

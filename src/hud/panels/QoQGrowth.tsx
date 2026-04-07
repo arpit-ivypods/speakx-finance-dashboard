@@ -1,8 +1,11 @@
 import React from 'react';
 import { qoqGrowth, additionalMetrics } from '../../data/mockData';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { useTheme } from '../../theme/ThemeContext';
 
 const QoQGrowth: React.FC = () => {
+  const { mapColor } = useTheme();
+
   const growthItems = [
     { label: qoqGrowth.revenue.label, value: qoqGrowth.revenue.change, color: qoqGrowth.revenue.color },
     { label: qoqGrowth.gross.label, value: qoqGrowth.gross.change, color: qoqGrowth.gross.color },
@@ -44,7 +47,7 @@ const QoQGrowth: React.FC = () => {
           fontSize: 9,
           fontWeight: 500,
           letterSpacing: '0.05em',
-          color: '#8A8F98',
+          color: 'var(--text-muted)',
           marginBottom: 8,
           flexShrink: 0,
         }}
@@ -73,7 +76,7 @@ const QoQGrowth: React.FC = () => {
                 fontWeight: 400,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                color: '#8A8F98',
+                color: 'var(--text-muted)',
               }}
             >
               {item.label}
@@ -83,7 +86,7 @@ const QoQGrowth: React.FC = () => {
                 fontFamily: "'Roboto Mono', monospace",
                 fontSize: 10,
                 fontWeight: 600,
-                color: item.color,
+                color: mapColor(item.color),
               }}
             >
               {item.value}
@@ -95,7 +98,7 @@ const QoQGrowth: React.FC = () => {
       {/* Divider */}
       <div
         style={{
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          borderTop: '1px solid var(--divider)',
           margin: '6px 0 8px',
           flexShrink: 0,
         }}
@@ -118,7 +121,7 @@ const QoQGrowth: React.FC = () => {
                 fontWeight: 400,
                 textTransform: 'uppercase',
                 letterSpacing: '0.04em',
-                color: '#8A8F98',
+                color: 'var(--text-muted)',
                 marginBottom: 2,
                 lineHeight: 1.2,
               }}
@@ -130,8 +133,8 @@ const QoQGrowth: React.FC = () => {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: 36,
                 fontWeight: 700,
-                color: item.color,
-                filter: `drop-shadow(0 0 8px ${item.color}50)`,
+                color: mapColor(item.color),
+                filter: `drop-shadow(0 0 8px ${mapColor(item.color)}50)`,
                 lineHeight: 1,
               }}
             >

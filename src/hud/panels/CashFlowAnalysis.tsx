@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { cashFlow } from '../../data/mockData';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { useTheme } from '../../theme/ThemeContext';
 
 const glassCard: React.CSSProperties = {
-  background: 'rgba(10, 16, 30, 0.70)',
-  border: '1px solid rgba(255, 255, 255, 0.15)',
+  background: 'var(--bg-card)',
+  border: '1px solid var(--border-card)',
   borderRadius: 8,
   backdropFilter: 'blur(10px)',
   WebkitBackdropFilter: 'blur(10px)',
@@ -17,8 +18,8 @@ const glassCard: React.CSSProperties = {
 };
 
 const glassCardHover: React.CSSProperties = {
-  boxShadow: '0 0 25px rgba(0,255,204,0.12), inset 0 0 25px rgba(0,255,204,0.04)',
-  borderColor: 'rgba(0,255,204,0.30)',
+  boxShadow: 'var(--hover-glow)',
+  borderColor: 'var(--hover-border)',
 };
 
 interface KPIRowProps {
@@ -39,7 +40,7 @@ function KPIRow({ label, value, unit, currency, color }: KPIRowProps) {
           fontWeight: 500,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
-          color: '#8A8F98',
+          color: 'var(--text-muted)',
           marginBottom: 4,
         }}
       >
@@ -58,7 +59,7 @@ function KPIRow({ label, value, unit, currency, color }: KPIRowProps) {
             fontSize: 18,
             fontWeight: 700,
             color,
-            filter: 'drop-shadow(0 0 8px rgba(0,255,204,0.4))',
+            filter: `drop-shadow(0 0 8px ${color}66)`,
             lineHeight: 1,
           }}
         >
@@ -69,7 +70,7 @@ function KPIRow({ label, value, unit, currency, color }: KPIRowProps) {
             color,
             fontSize: 12,
             fontWeight: 700,
-            filter: 'drop-shadow(0 0 6px rgba(0,255,204,0.4))',
+            filter: `drop-shadow(0 0 6px ${color}66)`,
             lineHeight: 1,
           }}
         >
@@ -82,6 +83,7 @@ function KPIRow({ label, value, unit, currency, color }: KPIRowProps) {
 
 export default function CashFlowAnalysis() {
   const [isHovered, setIsHovered] = useState(false);
+  const { mapColor } = useTheme();
 
   const kpis = [
     { ...cashFlow.netCashFromOps, displayLabel: 'NET CASH FROM OPS' },
@@ -106,7 +108,7 @@ export default function CashFlowAnalysis() {
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
-          color: '#FFFFFF',
+          color: 'var(--text-primary)',
           marginBottom: 12,
           flexShrink: 0,
         }}
@@ -121,7 +123,7 @@ export default function CashFlowAnalysis() {
           value={kpi.value}
           unit={kpi.unit}
           currency={kpi.currency}
-          color={kpi.color}
+          color={mapColor(kpi.color)}
         />
       ))}
     </div>

@@ -1,25 +1,37 @@
 import FinancialKPIs from './panels/FinancialKPIs';
 import OperatingExpenses from './panels/OperatingExpenses';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 
 const LeftColumn = () => {
+  const { isMobile, isDesktop } = useBreakpoint();
+  const isCompact = !isDesktop; // mobile or tablet
+
   return (
     <div style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '12px',
-      width: '40%',
-      height: '100%',
+      gap: isCompact ? '10px' : '12px',
+      width: isDesktop ? '40%' : '100%',
+      height: isDesktop ? '100%' : undefined,
       minWidth: 0,
     }}>
       <div
         className="fade-in-left"
-        style={{ flex: '55 1 0%', minHeight: 0, animationDelay: '0.3s' }}
+        style={{
+          flex: isDesktop ? '55 1 0%' : undefined,
+          minHeight: isCompact ? 320 : 0,
+          animationDelay: '0.3s',
+        }}
       >
         <FinancialKPIs />
       </div>
       <div
         className="fade-in-left"
-        style={{ flex: '45 1 0%', minHeight: 0, animationDelay: '0.4s' }}
+        style={{
+          flex: isDesktop ? '45 1 0%' : undefined,
+          minHeight: isCompact ? 280 : 0,
+          animationDelay: '0.4s',
+        }}
       >
         <OperatingExpenses />
       </div>

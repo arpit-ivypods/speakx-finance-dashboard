@@ -1,6 +1,7 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTheme } from '../theme/ThemeContext';
 
 /**
  * Perspective grid floor -- the "cyber floor" effect.
@@ -62,6 +63,18 @@ const LINE_COLOR = new THREE.Color(0, 1, 0.8); // #00FFCC
 
 function GridFloor() {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const { isDark } = useTheme();
+
+  useEffect(() => {
+    if (!materialRef.current) return;
+    if (isDark) {
+      materialRef.current.uniforms.uLineColor.value.set(0, 1, 0.8);
+      materialRef.current.uniforms.uLineAlpha.value = 0.06;
+    } else {
+      materialRef.current.uniforms.uLineColor.value.set(0.5, 0.55, 0.65);
+      materialRef.current.uniforms.uLineAlpha.value = 0.08;
+    }
+  }, [isDark]);
 
   const uniforms = useMemo(
     () => ({

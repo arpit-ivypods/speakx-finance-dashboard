@@ -2,42 +2,58 @@ import FinancialAnalysis from './panels/FinancialAnalysis';
 import MarginTrends from './panels/MarginTrends';
 import CashFlowAnalysis from './panels/CashFlowAnalysis';
 import ForecastPanel from './panels/ForecastPanel';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 
 const RightColumn = () => {
+  const { isMobile, isDesktop } = useBreakpoint();
+
   return (
     <div style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '12px',
-      width: '60%',
-      height: '100%',
+      gap: isMobile ? '10px' : '12px',
+      width: isDesktop ? '60%' : '100%',
+      height: isDesktop ? '100%' : undefined,
       minWidth: 0,
     }}>
       <div
         className="fade-in-right"
-        style={{ flex: '30 1 0%', minHeight: 0, animationDelay: '0.5s' }}
+        style={{
+          flex: isDesktop ? '30 1 0%' : undefined,
+          minHeight: isMobile ? 280 : 0,
+          animationDelay: '0.5s',
+        }}
       >
         <FinancialAnalysis />
       </div>
       <div
         className="fade-in-right"
-        style={{ flex: '35 1 0%', minHeight: 0, animationDelay: '0.6s' }}
+        style={{
+          flex: isDesktop ? '35 1 0%' : undefined,
+          minHeight: isMobile ? 300 : 0,
+          animationDelay: '0.6s',
+        }}
       >
         <MarginTrends />
       </div>
       <div
         className="fade-in-up"
-        style={{ flex: '30 1 0%', minHeight: 0, animationDelay: '0.7s' }}
+        style={{
+          flex: isDesktop ? '30 1 0%' : undefined,
+          minHeight: isMobile ? 200 : 0,
+          animationDelay: '0.7s',
+        }}
       >
         <div style={{
           display: 'flex',
-          gap: '12px',
-          height: '100%',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? '10px' : '12px',
+          height: isDesktop ? '100%' : undefined,
         }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ flex: 1, minWidth: 0, minHeight: isMobile ? 200 : undefined }}>
             <CashFlowAnalysis />
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ flex: 1, minWidth: 0, minHeight: isMobile ? 200 : undefined }}>
             <ForecastPanel />
           </div>
         </div>

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { COLORS } from '../../theme/colors';
 import { FONTS } from '../../theme/typography';
 import { marginTrends } from '../../data/mockData';
+import { useTheme } from '../../theme/ThemeContext';
 
 const glassCard: React.CSSProperties = {
-  background: 'rgba(10, 16, 30, 0.70)',
-  border: '1px solid rgba(255, 255, 255, 0.15)',
+  background: 'var(--bg-card)',
+  border: '1px solid var(--border-card)',
   borderRadius: 8,
   backdropFilter: 'blur(10px)',
   WebkitBackdropFilter: 'blur(10px)',
@@ -19,8 +20,8 @@ const glassCard: React.CSSProperties = {
 };
 
 const glassCardHover: React.CSSProperties = {
-  boxShadow: '0 0 25px rgba(0,255,204,0.12), inset 0 0 25px rgba(0,255,204,0.04)',
-  borderColor: 'rgba(0,255,204,0.30)',
+  boxShadow: 'var(--hover-glow)',
+  borderColor: 'var(--hover-border)',
 };
 
 interface TooltipData {
@@ -80,6 +81,7 @@ function buildAreaPath(points: { x: number; y: number }[]): string {
 }
 
 export default function MarginTrends() {
+  const { mapColor } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [animProgress, setAnimProgress] = useState(0);
@@ -139,7 +141,7 @@ export default function MarginTrends() {
             fontWeight: FONTS.header.weight,
             textTransform: FONTS.header.transform,
             letterSpacing: FONTS.header.letterSpacing,
-            color: COLORS.white,
+            color: 'var(--text-primary)',
           }}
         >
           MARGIN TRENDS
@@ -154,15 +156,15 @@ export default function MarginTrends() {
                   width: 5,
                   height: 5,
                   borderRadius: '50%',
-                  background: s.color,
-                  boxShadow: `0 0 3px ${s.color}`,
+                  background: mapColor(s.color),
+                  boxShadow: `0 0 3px ${mapColor(s.color)}`,
                 }}
               />
               <span
                 style={{
                   fontFamily: FONTS.body.family,
                   fontSize: 7,
-                  color: COLORS.greyLight,
+                  color: 'var(--text-secondary)',
                 }}
               >
                 {s.name}
@@ -185,8 +187,8 @@ export default function MarginTrends() {
           <defs>
             {series.map((s, i) => (
               <linearGradient key={i} id={`areaGrad${i}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={s.color} stopOpacity={0.08} />
-                <stop offset="100%" stopColor={s.color} stopOpacity={0} />
+                <stop offset="0%" stopColor={mapColor(s.color)} stopOpacity={0.08} />
+                <stop offset="100%" stopColor={mapColor(s.color)} stopOpacity={0} />
               </linearGradient>
             ))}
           </defs>
@@ -201,9 +203,9 @@ export default function MarginTrends() {
                   y1={y}
                   x2={CHART.width - CHART.padRight}
                   y2={y}
-                  stroke="rgba(255,255,255,0.05)"
                   strokeDasharray="4 3"
                   strokeWidth={1}
+                  style={{ stroke: 'var(--chart-gridline)' }}
                 />
                 <text
                   x={CHART.padLeft - 6}
@@ -212,7 +214,7 @@ export default function MarginTrends() {
                   style={{
                     fontFamily: FONTS.label.family,
                     fontSize: 7,
-                    fill: COLORS.grey,
+                    fill: 'var(--text-muted)',
                   }}
                 >
                   {v}%
@@ -231,7 +233,7 @@ export default function MarginTrends() {
               style={{
                 fontFamily: FONTS.label.family,
                 fontSize: 7,
-                fill: COLORS.grey,
+                fill: 'var(--text-muted)',
               }}
             >
               {m}
@@ -262,7 +264,7 @@ export default function MarginTrends() {
                 key={`line-${i}`}
                 d={buildSmoothPath(visiblePts)}
                 fill="none"
-                stroke={series[i].color}
+                stroke={mapColor(series[i].color)}
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -286,11 +288,11 @@ export default function MarginTrends() {
                   cx={pt.x}
                   cy={pt.y}
                   r={isActive ? 4 : 2}
-                  fill={series[si].color}
-                  stroke="#050B14"
+                  fill={mapColor(series[si].color)}
+                  stroke="var(--bg-deep)"
                   strokeWidth={2}
                   style={{
-                    filter: `drop-shadow(0 0 3px ${series[si].color}80)`,
+                    filter: `drop-shadow(0 0 3px ${mapColor(series[si].color)}80)`,
                     cursor: 'pointer',
                     transition: 'r 0.15s ease',
                   }}
@@ -300,7 +302,7 @@ export default function MarginTrends() {
                       y: pt.y,
                       value: pt.value,
                       month: months[pi],
-                      color: series[si].color,
+                      color: mapColor(series[si].color),
                       seriesName: series[si].name,
                     })
                   }
@@ -317,18 +319,18 @@ export default function MarginTrends() {
                 y1={CHART.padTop}
                 x2={tooltip.x}
                 y2={CHART.height - CHART.padBottom}
-                stroke="rgba(255,255,255,0.15)"
                 strokeWidth={1}
                 strokeDasharray="3 2"
+                style={{ stroke: 'var(--border-card)' }}
               />
               <line
                 x1={CHART.padLeft}
                 y1={tooltip.y}
                 x2={CHART.width - CHART.padRight}
                 y2={tooltip.y}
-                stroke="rgba(255,255,255,0.15)"
                 strokeWidth={1}
                 strokeDasharray="3 2"
+                style={{ stroke: 'var(--border-card)' }}
               />
               <rect
                 x={tooltip.x + 8}
@@ -336,9 +338,9 @@ export default function MarginTrends() {
                 width={70}
                 height={22}
                 rx={4}
-                fill="rgba(10,16,30,0.9)"
                 stroke={tooltip.color}
                 strokeWidth={0.5}
+                style={{ fill: 'var(--tooltip-bg)' }}
               />
               <text
                 x={tooltip.x + 14}

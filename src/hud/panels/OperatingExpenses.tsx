@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { operatingExpenses } from '../../data/mockData';
+import { useTheme } from '../../theme/ThemeContext';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
 
 /* ── Glass card ─────────────────────────────────────── */
 
 const glassStyle: React.CSSProperties = {
-  background: 'rgba(10, 16, 30, 0.70)',
-  border: '1px solid rgba(255, 255, 255, 0.15)',
+  background: 'var(--bg-card)',
+  border: '1px solid var(--border-card)',
   borderRadius: 8,
   backdropFilter: 'blur(10px)',
   WebkitBackdropFilter: 'blur(10px)',
@@ -20,8 +22,8 @@ const glassStyle: React.CSSProperties = {
 };
 
 const glassHover: React.CSSProperties = {
-  boxShadow: '0 0 25px rgba(0,255,204,0.12), inset 0 0 25px rgba(0,255,204,0.04)',
-  borderColor: 'rgba(0,255,204,0.30)',
+  boxShadow: 'var(--hover-glow)',
+  borderColor: 'var(--hover-border)',
 };
 
 /* ── Bar constants ──────────────────────────────────── */
@@ -110,7 +112,7 @@ const Bar: React.FC<{
             width: '100%',
             height: '100%',
             borderRadius: '4px 4px 0 0',
-            background: 'rgba(255,255,255,0.03)',
+            background: 'var(--chart-gridline)',
           }}
         />
         <motion.div
@@ -141,7 +143,7 @@ const Bar: React.FC<{
           fontFamily: "'Roboto Mono', monospace",
           fontSize: 9,
           fontWeight: 400,
-          color: '#8A8F98',
+          color: 'var(--text-muted)',
           marginTop: 5,
           flexShrink: 0,
         }}
@@ -187,7 +189,7 @@ const BreakdownRow: React.FC<{
           fontFamily: "'Inter', sans-serif",
           fontSize: 9,
           fontWeight: 400,
-          color: '#B0B7C3',
+          color: 'var(--text-secondary)',
           flex: 1,
         }}
       >
@@ -211,7 +213,7 @@ const BreakdownRow: React.FC<{
       style={{
         height: 2,
         borderRadius: 1,
-        background: 'rgba(255,255,255,0.04)',
+        background: 'var(--chart-gridline)',
         marginLeft: 9,
         overflow: 'hidden',
       }}
@@ -232,6 +234,8 @@ const BreakdownRow: React.FC<{
 /* ── Main component ─────────────────────────────────── */
 
 const OperatingExpenses: React.FC = () => {
+  const { mapColor, isDark } = useTheme();
+  const { isMobile } = useBreakpoint();
   const [isHovered, setIsHovered] = useState(false);
   const maxPct = Math.max(...operatingExpenses.breakdown.map((b) => b.pct));
 
@@ -252,7 +256,7 @@ const OperatingExpenses: React.FC = () => {
           fontWeight: 700,
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
-          color: '#FFFFFF',
+          color: 'var(--text-primary)',
           marginBottom: 10,
           flexShrink: 0,
         }}
@@ -261,7 +265,7 @@ const OperatingExpenses: React.FC = () => {
       </div>
 
       {/* Two-column layout */}
-      <div style={{ display: 'flex', gap: 14, flex: 1, minHeight: 0, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 14, flex: 1, minHeight: 0, overflow: 'hidden' }}>
         {/* Left: Bar chart */}
         <div
           style={{
@@ -279,7 +283,7 @@ const OperatingExpenses: React.FC = () => {
               label={q.label}
               value={q.value}
               unit={q.unit}
-              color={q.color}
+              color={mapColor(q.color)}
               heightFraction={barMeta[q.label]}
               index={i}
             />
@@ -287,13 +291,17 @@ const OperatingExpenses: React.FC = () => {
         </div>
 
         {/* Gradient divider */}
-        <div
-          style={{
-            width: 1,
-            background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.1), transparent)',
-            flexShrink: 0,
-          }}
-        />
+        {!isMobile && (
+          <div
+            style={{
+              width: 1,
+              background: isDark
+                ? 'linear-gradient(180deg, transparent, rgba(255,255,255,0.1), transparent)'
+                : 'linear-gradient(180deg, transparent, var(--divider), transparent)',
+              flexShrink: 0,
+            }}
+          />
+        )}
 
         {/* Right: Breakdown with progress bars */}
         <div
@@ -310,7 +318,7 @@ const OperatingExpenses: React.FC = () => {
               key={item.category}
               category={item.category}
               pct={item.pct}
-              color={item.color}
+              color={mapColor(item.color)}
               maxPct={maxPct}
               index={i}
             />

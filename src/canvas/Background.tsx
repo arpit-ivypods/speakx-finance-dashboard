@@ -1,6 +1,7 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTheme } from '../theme/ThemeContext';
 
 /**
  * Fullscreen quad with a deep-space gradient shader.
@@ -63,6 +64,15 @@ const BOTTOM_COLOR = new THREE.Color('#050B14');
 
 function Background() {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const { isDark } = useTheme();
+
+  useEffect(() => {
+    if (!materialRef.current) return;
+    const topColor = isDark ? '#0A101E' : '#E8EDF5';
+    const bottomColor = isDark ? '#050B14' : '#F0F2F8';
+    materialRef.current.uniforms.uColorTop.value.set(topColor);
+    materialRef.current.uniforms.uColorBottom.value.set(bottomColor);
+  }, [isDark]);
 
   const uniforms = useMemo(
     () => ({
