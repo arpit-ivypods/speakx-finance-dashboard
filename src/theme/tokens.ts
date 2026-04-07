@@ -49,9 +49,9 @@ export const darkTokens: ThemeTokens = {
 export const lightTokens: ThemeTokens = {
   bgDeep: '#FFFFFF',
   bgMid: '#F8F9FC',
-  bgCard: 'rgba(255, 255, 255, 0.90)',
-  borderCard: 'rgba(0, 0, 0, 0.06)',
-  borderSubtle: 'rgba(0, 0, 0, 0.04)',
+  bgCard: 'rgba(255, 255, 255, 0.92)',
+  borderCard: 'rgba(0, 137, 123, 0.10)',
+  borderSubtle: 'rgba(0, 137, 123, 0.06)',
   textPrimary: '#1A1A2E',
   textSecondary: '#4A5568',
   textMuted: '#6B7280',
@@ -64,9 +64,9 @@ export const lightTokens: ThemeTokens = {
   glowCyan: 'rgba(0,137,123,0.10)',
   hoverGlow: '0 0 16px rgba(0,137,123,0.12), 0 2px 8px rgba(0,0,0,0.06)',
   hoverBorder: 'rgba(0,137,123,0.20)',
-  chartGridline: 'rgba(0,0,0,0.06)',
+  chartGridline: 'rgba(0,137,123,0.06)',
   tooltipBg: 'rgba(255,255,255,0.95)',
-  divider: 'rgba(0,0,0,0.05)',
+  divider: 'rgba(0,137,123,0.06)',
   selectionBg: 'rgba(0, 137, 123, 0.2)',
 };
 

@@ -27,6 +27,7 @@ const fragmentShader = /* glsl */ `
   uniform float uTime;
   uniform vec3 uColorTop;
   uniform vec3 uColorBottom;
+  uniform float uVignetteStrength;
   varying vec2 vUv;
 
   // Attempt a tiny hue rotation by rotating the color in a pseudo-HSL manner.
@@ -44,15 +45,14 @@ const fragmentShader = /* glsl */ `
     float gradient = vUv.y;
     vec3 baseColor = mix(uColorBottom, uColorTop, gradient);
 
-    // --- radial vignette ---
+    // --- radial vignette (controlled by uniform) ---
     vec2 center = vUv - 0.5;
     float dist = length(center);
-    // Darken edges – strongest at corners (dist ~ 0.707)
-    float vignette = 1.0 - smoothstep(0.25, 0.85, dist);
+    float vignette = 1.0 - smoothstep(0.25, 0.85, dist) * uVignetteStrength;
     baseColor *= vignette;
 
     // --- time-driven hue shift (+/- 2 % -> ~ +/- 0.04 rad) ---
-    float hueOffset = sin(uTime / 60.0 * 6.2831853) * 0.04;
+    float hueOffset = sin(uTime / 60.0 * 6.2831853) * 0.04 * uVignetteStrength;
     baseColor = hueShift(baseColor, hueOffset);
 
     gl_FragColor = vec4(baseColor, 1.0);
@@ -72,6 +72,7 @@ function Background() {
     const bottomColor = isDark ? '#050B14' : '#F8F9FC';
     materialRef.current.uniforms.uColorTop.value.set(topColor);
     materialRef.current.uniforms.uColorBottom.value.set(bottomColor);
+    materialRef.current.uniforms.uVignetteStrength.value = isDark ? 1.0 : 0.0;
   }, [isDark]);
 
   const uniforms = useMemo(
@@ -79,6 +80,7 @@ function Background() {
       uTime: { value: 0 },
       uColorTop: { value: TOP_COLOR },
       uColorBottom: { value: BOTTOM_COLOR },
+      uVignetteStrength: { value: 1.0 },
     }),
     [],
   );
